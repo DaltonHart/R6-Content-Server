@@ -7,8 +7,11 @@ module.exports = mongoose.model('User', new mongoose.Schema(
 		required: true, 
 		unique: true, 
 		match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/ ,
-		
 		},
-	password: { type: String, required: true,  select: false}
+	password: { type: String, required: true,  select: false},
+	username: {type: String, },
+	uplayAccount: String,
+	admin: Boolean,
+	moderator: Boolean,
 	}
 	))

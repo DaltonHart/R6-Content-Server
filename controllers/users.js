@@ -1,5 +1,4 @@
 const jwt = require('jwt-simple')
-const passport = require('../config/passport')
 const config = require('../config/config')
 const db = require('../models')
 const User = db.User
@@ -18,10 +17,8 @@ module.exports = {
           console.log("hashing error:", err);
           res.status(200).json({error: err})
         } else {
-        let newUser = {
-          email: req.body.email,
-          password: hash
-        }
+        let newUser = req.body
+        newUser.password = hash
       User.findOne({ email: req.body.email })
         .then((user) => {
           if (!user) {
