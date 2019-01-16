@@ -13,5 +13,6 @@ module.exports = mongoose.model('User', new mongoose.Schema(
 	uplayAccount: String,
 	admin: Boolean,
 	moderator: Boolean,
+	dateJoined: { type : Date, default: Math.floor(new Date().getTime()/1000.0) }
 	}
 	))

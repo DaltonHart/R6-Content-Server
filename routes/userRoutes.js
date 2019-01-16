@@ -5,5 +5,6 @@ const
 
 module.exports = router
   .get('/', userController.index)
+  .get('/:id', userController.show)
   .post('/signup', userController.signup)
   .post('/login', userController.login)

@@ -8,7 +8,13 @@ const bcrypt = require('bcrypt')
 module.exports = {
   index: (req, res) => {
     User.find({})
-        .then(users => res.json(users))
+    .exec((err, users)=>{
+      let total = users.length
+      if (err) {
+        res.status(500).json({'ERROR': err})
+      }
+      res.json({total:total,users: users})
+    })
   },
   signup: (req, res) => {
     if (req.body.email && req.body.password) { 
@@ -61,5 +67,17 @@ module.exports = {
     } else {
       res.sendStatus(401).json({error:'username/password incorrect'})
     }
+  },
+  show: (req, res) => {
+    let id = req.params.id
+    User.findOne({_id:id})
+        .exec((err,user)=>{
+          if (err) {
+            res.status(500).json({
+              "ERROR": err
+            });
+          }
+          res.json({user})
+        })
   }
 }
