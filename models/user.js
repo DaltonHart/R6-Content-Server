@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
 	uplayAccount: String,
 	admin: Boolean,
 	moderator: Boolean,
-	dateJoined: { type : Date, default: Math.floor(new Date().getTime()/1000.0) }
+	dateJoined: { type : Date, default: () => Date.now() }
 })
 
 userSchema.set('toJSON', {
