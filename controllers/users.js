@@ -31,7 +31,7 @@ module.exports = {
             User.create(newUser)
               .then(user => {
                 if (user) {
-                  let payload = { id: user.id }
+                  let payload = { user: user }
                   let token = jwt.encode(payload, config.jwtSecret)
                   res.json({ token })
                 } else {
@@ -48,12 +48,17 @@ module.exports = {
     }
   },
   login: (req, res) => {
+    console.log('login')
     if (req.body.email && req.body.password) {
       User.findOne({ email: req.body.email }).then(user => {
         if (user) {
           bcrypt.compare(req.body.password, user.password, (err, match) => {
+            if(err){
+              console.log('error', err)
+              res.sendStatus(401).json({error: err})
+            }
             if (match) {
-              let payload = { id: user.id }
+              let payload = { user: user }
               let token = jwt.encode(payload, config.jwtSecret)
               res.json({ token })
             } else {
@@ -69,8 +74,8 @@ module.exports = {
     }
   },
   show: (req, res) => {
-    let id = req.params.id
-    User.findOne({_id:id})
+    let username = req.params.name
+    User.findOne({username:username})
         .exec((err,user)=>{
           if (err) {
             res.status(500).json({
